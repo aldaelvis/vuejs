@@ -1,4 +1,4 @@
-## Paginacion de registros (php y  mysql)
+## Paginación de registros (php y  mysql)
 
 ~~~ php
 $tamaño_pagina = 5;
@@ -34,7 +34,7 @@ return $total_array = array(
 );
 ~~~
 
-## Paginacion en VueJs
+## Paginación en VueJs
 
 ~~~ javascript
 new Vue({
@@ -106,19 +106,58 @@ new Vue({
 
   });
 ~~~
-## Paginacion en la vista
+## Paginación en la vista
 
 ~~~ html
 <ul class="paginacion">
     <li class="page-item" v-if="paginacion.current_page > 1">
-        <a class="page-link" href="#"
-            @click.prevent="cambiarPagina(paginacion.current_page - 1)">Ant</a>
+	<a class="page-link" href="#"
+	@click.prevent="cambiarPagina(paginacion.current_page - 1, buscar)">Ant</a>
     </li>
-    <li class="page-item" v-for="page in pageNumber" :key="page" :class="[page == isActive ? 'activado' : '']">
-        <a class="page-link" href="#" @click.prevent="cambiarPagina(page)" v-text="page"></a>
+    <li class="page-item" v-for="page in pageNumber" :key="page"
+	:class="[page == isActive ? 'active' : '']">
+	<a class="page-link" href="#" @click.prevent="cambiarPagina(page, buscar)" v-text="page"></a>
     </li>
     <li class="page-item" v-if="paginacion.current_page < paginacion.last_page">
-        <a class="page-link" href="#" @click.prevent="cambiarPagina(paginacion.current_page +1 )">Sig</a>
+	<a class="page-link" href="#"
+	@click.prevent="cambiarPagina(paginacion.current_page +1, buscar)">Sig</a>
     </li>
 </ul>
+~~~
+
+## Estilos css para la paginación
+~~~ css
+.paginacion {
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: .25rem;
+    justify-content: center;
+}
+
+.page-item::after, ::before{
+    box-sizing: border-box;
+}
+.page-item:first-child .page-link{
+    margin-left: 0;
+    border-top-left-radius: .25rem;
+    border-bottom-left-radius: .25rem;
+}
+.page-link{
+    position: relative;
+    display: block;
+    padding: .2rem .65rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: #007bff;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}
+
+.page-item.active .page-link{
+    z-index: 1;
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
 ~~~
